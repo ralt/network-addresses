@@ -3,7 +3,8 @@
   :author "Florian Margaine <florian@margaine.com>"
   :license "MIT"
   :serial t
+  :depends-on (:cl-ppcre)
   :components ((:module "src"
                 :components ((:file "package")
-                             (:file "network-addresses"
-                              :depends-on ("package"))))))
+                             (:file "network" :depends-on ("package"))
+                             (:file "ipv4" :depends-on ("package" "network"))))))

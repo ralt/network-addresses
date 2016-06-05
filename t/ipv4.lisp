@@ -4,5 +4,13 @@
 
 (in-suite ipv4)
 
-(test arithmetic
-  (is (= 1 1)))
+(defmacro signals-invalid-format (&body body)
+  `(signals (na:invalid-format)
+     ,@body))
+
+(test invalid-formats
+  (signals-invalid-format (na4:make-network-from-cidr "foo"))
+  (signals-invalid-format (na4:make-network-from-cidr "100"))
+  (signals-invalid-format (na4:make-network-from-cidr "100.100.100.100"))
+  (signals-invalid-format (na4:make-network-from-cidr "300.100.100.100/24"))
+  (signals-invalid-format (na4:make-network-from-cidr "100.100.100.100/33")))
