@@ -2,7 +2,7 @@
 
 (defclass ipv4-network (na:network)
   ((na:width :reader na:width :initform 32)
-   (na:max-value :reader na:max-value :initform 4294967295)))
+   (na:max-value :reader na:max-value :initform #xFFFFFFFF)))
 
 (defclass ipv4-address (na:address) ())
 
