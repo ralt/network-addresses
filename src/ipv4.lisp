@@ -47,6 +47,11 @@ With math."
           (logand (ash (na:as-int address) -8) #xFF)
           (logand (na:as-int address) #xFF)))
 
+(defmethod na:as-str ((network ipv4-network))
+  (format nil "~A/~D"
+          (na:as-str (make-instance 'ipv4-address :integer-value (na:as-int network)))
+          (na:subnet-length network)))
+
 (defmethod na:hostmask ((network ipv4-network))
   "Returns the hostmask as an IP address."
   (make-instance 'ipv4-address :integer-value (na:hostmask-int network)))

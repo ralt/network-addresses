@@ -29,3 +29,9 @@
 (test hostmask
   (let ((network (na4:make-network-from-cidr "192.168.0.0/16")))
     (is (string= (na:as-str (na:hostmask network)) "0.0.255.255"))))
+
+(test str-network
+  (let ((network (na4:make-network-from-cidr "192.168.0.0/16")))
+    (is (string= (na:as-str network) "192.168.0.0/16")))
+  (let ((network (na4:make-network-from-cidr "192.168.0.255/16")))
+    (is (string= (na:as-str network) "192.168.0.255/16"))))
