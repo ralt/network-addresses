@@ -18,4 +18,14 @@
 (test sanity
   (let ((network (na4:make-network-from-cidr "255.255.255.255/32")))
     (is (= (na:subnet-length network) 32))
-    (is (= (na:integer-value network) 4294967295))))
+    (is (= (na:as-int network) 4294967295))))
+
+(test netmask
+  (let ((network (na4:make-network-from-cidr "192.168.0.0/16")))
+    (is (string= (na:as-str (na:netmask network)) "255.255.0.0")))
+  (let ((network (na4:make-network-from-cidr "192.168.0.0/18")))
+    (is (string= (na:as-str (na:netmask network)) "255.255.192.0"))))
+
+(test hostmask
+  (let ((network (na4:make-network-from-cidr "192.168.0.0/16")))
+    (is (string= (na:as-str (na:hostmask network)) "0.0.255.255"))))

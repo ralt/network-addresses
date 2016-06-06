@@ -1,15 +1,16 @@
 (in-package #:network-addresses-ipv4)
 
-(defclass ipv4-network (na:network) ())
+(defclass ipv4-network (na:network)
+  ((na:width :reader na:width :initform 32)
+   (na:max-value :reader na:max-value :initform 4294967295)))
 
-(defvar *ipv4-max-network-value* 4294967295)
-(defvar *ipv4-max-network-length* 32)
+(defclass ipv4-address (na:address) ())
 
 (defmethod initialize-instance :after ((network ipv4-network) &key)
-  (unless (and (and (>= (na:integer-value network) 0)
-                    (<= (na:integer-value network) *ipv4-max-network-value*))
+  (unless (and (and (>= (na:as-int network) 0)
+                    (<= (na:as-int network) (na:max-value network)))
                (and (>= (na:subnet-length network) 0)
-                    (<= (na:subnet-length network) *ipv4-max-network-length*)))
+                    (<= (na:subnet-length network) (na:width network))))
     (error 'na:invalid-format)))
 
 (defvar *ipv4-cidr-regex* "(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)\\/(\\d+)")
@@ -34,3 +35,22 @@ With math."
      (* (parse-integer (elt strings 1)) (expt 2 16))
      (* (parse-integer (elt strings 2)) (expt 2 8))
      (parse-integer (elt strings 3))))
+
+(defmethod print-object ((address ipv4-address) out)
+  (print-unreadable-object (address out :type t)
+    (format out (na:as-str address))))
+
+(defmethod na:as-str ((address ipv4-address))
+  (format nil "~A.~A.~A.~A"
+          (ash (na:as-int address) -24)
+          (logand (ash (na:as-int address) -16) #xFF)
+          (logand (ash (na:as-int address) -8) #xFF)
+          (logand (na:as-int address) #xFF)))
+
+(defmethod na:hostmask ((network ipv4-network))
+  "Returns the hostmask as an IP address."
+  (make-instance 'ipv4-address :integer-value (na:hostmask-int network)))
+
+(defmethod na:netmask ((network ipv4-network))
+  "Returns the netmask as an IP address."
+  (make-instance 'ipv4-address :integer-value (na:netmask-int network)))
