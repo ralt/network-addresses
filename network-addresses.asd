@@ -6,5 +6,8 @@
   :depends-on (:cl-ppcre)
   :components ((:module "src"
                 :components ((:file "package")
-                             (:file "network" :depends-on ("package"))
+                             (:file "generic" :depends-on ("package"))
+                             (:file "conditions" :depends-on ("package"))
+                             (:file "address" :depends-on ("package"))
+                             (:file "network" :depends-on ("package" "generic" "conditions" "address"))
                              (:file "ipv4" :depends-on ("package" "network"))))))
