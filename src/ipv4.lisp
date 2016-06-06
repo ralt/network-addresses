@@ -53,9 +53,10 @@ With math."
           (na:subnet-length network)))
 
 (defmethod na:hostmask ((network ipv4-network))
-  "Returns the hostmask as an IP address."
   (make-instance 'ipv4-address :integer-value (na:hostmask-int network)))
 
 (defmethod na:netmask ((network ipv4-network))
-  "Returns the netmask as an IP address."
   (make-instance 'ipv4-address :integer-value (na:netmask-int network)))
+
+(defmethod na:broadcast ((network ipv4-network))
+  (make-instance 'ipv4-address :integer-value (na:broadcast-int network)))

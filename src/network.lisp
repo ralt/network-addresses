@@ -20,3 +20,10 @@
   "Returns the hostmask as an integer."
   (- (ash 1 (- (width network) (subnet-length network)))
      1))
+
+(defgeneric broadcast (network)
+  (:documentation "Returns the broadcast as an IP address."))
+
+(defun broadcast-int (network)
+  "Returns the broadcast as an integer."
+  (logior (as-int network) (hostmask-int network)))

@@ -10,6 +10,8 @@
            :netmask-int
            :hostmask
            :hostmask-int
+           :broadcast
+           :broadcast-int
            :width
            :max-value
            :address))
