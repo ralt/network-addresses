@@ -14,7 +14,13 @@
            :broadcast-int
            :width
            :max-value
-           :address))
+           :address
+           :addresses
+           :addresses-int
+           :first-address
+           :first-address-int
+           :last-address
+           :last-address-int))
 
 (defpackage #:network-addresses-ipv4
   (:use #:cl)

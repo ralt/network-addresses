@@ -60,3 +60,13 @@ With math."
 
 (defmethod na:broadcast ((network ipv4-network))
   (make-instance 'ipv4-address :integer-value (na:broadcast-int network)))
+
+(defmethod na:addresses ((network ipv4-network))
+  (mapcar (lambda (address-int) (make-instance 'ipv4-address :integer-value address-int))
+          (na:addresses-int network)))
+
+(defmethod na:first-address ((network ipv4-network))
+  (make-instance 'ipv4-address :integer-value (na:first-address-int network)))
+
+(defmethod na:last-address ((network ipv4-network))
+  (make-instance 'ipv4-address :integer-value (na:last-address-int network)))

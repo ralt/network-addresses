@@ -39,3 +39,9 @@
 (test broadcast
   (let ((network (na4:make-network-from-cidr "192.168.0.0/16")))
     (is (string= (na:as-str (na:broadcast network)) "192.168.255.255"))))
+
+(test loop-network-addresses
+  (let* ((network (na4:make-network-from-cidr "192.168.0.0/16"))
+         (addresses (na:addresses network)))
+    (is (string= (na:as-str (first addresses)) "192.168.0.1"))
+    (is (string= (na:as-str (first (last addresses))) "192.168.255.254"))))
