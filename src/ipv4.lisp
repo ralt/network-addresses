@@ -47,6 +47,10 @@ With math."
           (logand (ash (na:as-int address) -8) #xFF)
           (logand (na:as-int address) #xFF)))
 
+(defmethod print-object ((network ipv4-network) out)
+  (print-unreadable-object (network out :type t)
+    (format out (na:as-str network))))
+
 (defmethod na:as-str ((network ipv4-network))
   (format nil "~A/~D"
           (na:as-str (make-instance 'ipv4-address :integer-value (na:as-int network)))

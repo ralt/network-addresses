@@ -25,6 +25,4 @@
 (defpackage #:network-addresses-ipv4
   (:use #:cl)
   (:nicknames #:na4)
-  (:export :make-network-from-cidr
-           :netmask
-           :hostmask))
+  (:export :make-network-from-cidr))
